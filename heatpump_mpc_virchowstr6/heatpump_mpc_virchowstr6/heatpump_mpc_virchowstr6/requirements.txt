@@ -1,0 +1,20 @@
+# Python Dependencies for Heat Pump MPC Project
+# Virchowstr. 6, Langenhagen
+
+# Core numerical computing
+numpy>=1.20.0          # Array operations, linear algebra
+pandas>=1.3.0          # Data manipulation (optional, for analysis)
+
+# Visualization
+matplotlib>=3.4.0      # Plotting simulation results
+
+# Optimization (CRITICAL for MPC)
+casadi>=3.5.5          # Nonlinear optimization framework
+                       # Provides IPOPT solver for MPC
+                       # Why: Fast, reliable, handles constraints well
+
+# Configuration
+pyyaml>=5.4.0          # YAML config file parsing
+
+# Installation:
+# pip install -r requirements.txt

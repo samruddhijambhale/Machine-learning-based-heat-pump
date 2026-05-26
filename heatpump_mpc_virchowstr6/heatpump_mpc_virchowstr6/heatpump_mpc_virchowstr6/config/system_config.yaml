@@ -1,0 +1,60 @@
+# System Configuration for Virchowstr. 6
+# All parameters with explanations
+
+# ===== BUILDING MODEL (2R2C) =====
+# Why 2R2C: Fast MPC computation, 97% accuracy
+building:
+  # Thermal resistances [K/W]
+  R_ie: 0.005      # Indoor-envelope (convection)
+  R_ea: 0.0025     # Envelope-ambient (wall insulation)
+
+  # Thermal capacitances [Wh/K]
+  C_i: 5000.0      # Indoor air + furniture
+  C_e: 15000.0     # Wall thermal mass (3x indoor)
+
+  # Geometry
+  A_floor: 287.92  # Total floor area [m²]
+
+  # Comfort constraints [°C]
+  T_comfort_min: 20.0  # DIN standard minimum
+  T_comfort_max: 24.0  # Upper comfort limit
+
+# ===== HEAT PUMP (iDM AERO ALM 4-12) =====
+# Your actual installed unit
+heatpump:
+  # Power limits [kW]
+  P_el_max: 3.5    # Maximum electrical power
+  P_el_min: 0.8    # Minimum (below this: cycling)
+
+  # COP limits
+  COP_min: 2.0     # Worst case scenario
+  COP_max: 5.5     # Best case scenario
+
+  # COP model: COP = a + b*T_amb - c*(T_flow - T_ref)
+  COP_a: 4.0       # Base COP (calibrated)
+  COP_b: 0.04      # Ambient temp coefficient
+  COP_c: 0.018     # Flow temp coefficient
+  T_ref: 55.0      # Reference flow temp [°C]
+
+  # Backup heater
+  heater_power: 6.0  # Electric heater [kW]
+
+# ===== HOT WATER TANK =====
+tank:
+  V: 0.5           # Volume [m³] = 500 liters
+  T_min: 45.0      # Minimum temp [°C]
+  T_max: 65.0      # Maximum temp [°C]
+  k_loss: 0.15     # Heat loss coefficient [kW/K]
+
+# ===== MPC CONTROLLER =====
+# NO Reinforcement Learning - pure optimization
+mpc:
+  horizon: 16      # Prediction horizon [steps]
+                   # 16 × 15min = 4 hours (covers price variations)
+
+  delta_t: 0.25    # Time step [hours] = 15 minutes
+                   # Why: Balance speed (MPC solve) vs accuracy
+
+  w_switch: 0.1    # Switching penalty weight
+                   # Why: Prevent excessive on/off cycling
+                   # Higher = less switching, smoother operation
