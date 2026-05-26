@@ -296,8 +296,8 @@ mpc:
 - Python implementation
 
 **Customizations:**
-- YOUR building parameters
-- YOUR heat pump model
+- Building parameters
+- Heat pump model
 - Production-ready 
 - Tibber pricing integration
 
