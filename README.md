@@ -6,7 +6,7 @@ Complete Model Predictive Control (MPC) system for optimal heat pump operation.
 
 ---
 
-## 🏢 YOUR Building Information
+## Building Information
 
 | Parameter | Value | Source File |
 |-----------|-------|-------------|
@@ -19,7 +19,7 @@ Complete Model Predictive Control (MPC) system for optimal heat pump operation.
 
 ---
 
-## 🔧 YOUR System Specifications
+## System Specifications
 
 ### Heat Pump: iDM AERO ALM 4-12
 - **Type**: Air-source monoblock
@@ -48,63 +48,44 @@ Complete Model Predictive Control (MPC) system for optimal heat pump operation.
 
 ---
 
-## 🎯 Design Decisions Explained
+## Design Decisions Explained
 
 ### WHY 2R2C (not 4R3C)?
 
 | Factor | 2R2C | 4R3C | Winner |
 |--------|------|------|--------|
-| **MPC solve time** | 0.5 sec | 2-3 sec | **2R2C** ✓ |
-| **Real-time capable** | YES | Marginal | **2R2C** ✓ |
-| **Parameters needed** | 4 (have it) | 7 (need wall data) | **2R2C** ✓ |
+| **MPC solve time** | 0.5 sec | 2-3 sec | **2R2C**  |
+| **Real-time capable** | YES | Marginal | **2R2C**  |
+| **Parameters needed** | 4 (have it) | 7 (need wall data) | **2R2C**  |
 | **Accuracy (4h)** | 95-98% | 96-99% | Tie |
-| **Data available** | Heat load only | Wall composition | **2R2C** ✓ |
+| **Data available** | Heat load only | Wall composition | **2R2C**  |
 
 **DECISION**: 2R2C gives 97% accuracy at 20% computational cost → OPTIMAL
 
-### WHY NO Solar Gains?
-
-1. **Standard building**: Not passive house, typical German multi-family
-2. **Winter focus**: Heating season has low solar irradiance  
-3. **Window area**: Limited south-facing windows
-4. **Impact**: <5% of total heat balance
-5. **Simplicity**: Cleaner model without accuracy loss
-
-**DECISION**: Removed - not significant for your building type
-
-### WHY NO Reinforcement Learning?
-
-1. **Known physics**: Building/HP dynamics are well understood
-2. **MPC sufficient**: Optimization handles this problem well
-3. **Deterministic**: Explainable and debuggable
-4. **Simpler**: No training, hyperparameters, convergence issues
-5. **Production-ready**: Faster to deploy
-
-**DECISION**: Pure MPC optimization - simpler and more reliable
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 heatpump_mpc_virchowstr6/
 │
-├── README.md                    ← You are here
+├── README.md                    
 ├── requirements.txt             ← Python dependencies
 │
 ├── models/                      ← Physical models
-│   ├── building_model.py        ← 2R2C thermal model (NO SOLAR)
+│   ├── building_model.py        ← 2R2C thermal model 
 │   ├── heatpump_model.py        ← iDM AERO ALM 4-12
 │   ├── tank_model.py            ← 500L storage
 │   ├── integrated_system.py     ← Combined system
 │   └── __init__.py
 │
 ├── controllers/                 ← Optimization
-│   ├── mpc_controller.py        ← MPC (NO RL)
+│   ├── mpc_controller.py        ← MPC 
 │   └── __init__.py
 │
 ├── utils/                       ← Supporting functions
-│   ├── disturbances.py          ← Weather, prices (NO SOLAR)
+│   ├── disturbances.py          ← Weather, prices 
 │   ├── plotting.py              ← Visualization
 │   ├── logger.py                ← Logging
 │   └── __init__.py
@@ -123,7 +104,7 @@ heatpump_mpc_virchowstr6/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Install Dependencies
 ```bash
@@ -168,7 +149,7 @@ Check `results/simulation_results.png` for plots
 
 ---
 
-## 📊 Model Details
+## Model Details
 
 ### 2R2C Building Model
 
@@ -187,8 +168,8 @@ T_outdoor --[R_ea]-- ● T_wall --[R_ie]-- ● T_indoor
 **Validation:**
 ```
 R_total = 0.0075 K/W
-Heat load = ΔT/R = 30K / 0.0075 = 4 kW (partial load) ✓
-Time constant = R×C ≈ 10-15 hours (typical) ✓
+Heat load = ΔT/R = 30K / 0.0075 = 4 kW (partial load) 
+Time constant = R×C ≈ 10-15 hours (typical) 
 ```
 
 ### Heat Pump Model
@@ -222,7 +203,7 @@ minimize: Σ [price[k] × P_el[k] × Δt + w_switch × (P_el[k] - P_el[k-1])²]
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Edit `config/system_config.yaml` to customize:
 
@@ -251,7 +232,7 @@ mpc:
 
 ---
 
-## 📈 Expected Performance
+## Expected Performance
 
 **3-Day Winter Simulation** (T_ambient = 5°C average):
 
@@ -268,9 +249,9 @@ mpc:
 
 ---
 
-## 🔬 Technical Background
+## Technical Background
 
-### Disturbances (NO SOLAR)
+### Disturbances 
 
 1. **Ambient Temperature**
    - Sinusoidal daily pattern
@@ -298,7 +279,7 @@ mpc:
 
 ---
 
-## 🆚 Comparison to i4b Framework
+## Comparison to i4b Framework
 
 | Feature | i4b | This Project |
 |---------|-----|--------------|
@@ -317,12 +298,12 @@ mpc:
 **Customizations:**
 - YOUR building parameters
 - YOUR heat pump model
-- Production-ready (no RL complexity)
+- Production-ready 
 - Tibber pricing integration
 
 ---
 
-## 📚 References
+## References
 
 1. iDM AERO ALM 4-12 Datasheet
 2. i4b Framework - https://github.com/lfrison/i4b
@@ -332,13 +313,13 @@ mpc:
 
 ---
 
-## 📝 License
+## License
 
 MIT License - Free to use and modify
 
 ---
 
-## 👤 Author
+## Author
 
 Created for **Virchowstr. 6, Langenhagen**
 
